@@ -4,6 +4,7 @@ using System.Diagnostics;
 using HP.LFT.SDK;
 using HP.LFT.SDK.Web;
 using NUnit.Framework;
+using HP.LFT.Verifications;
 
 namespace LeanFTAutoTest.step_bindings
 {
@@ -52,6 +53,9 @@ namespace LeanFTAutoTest.step_bindings
             });
             addToCartButton.Click();
 
+            Reporter.ReportEvent("Screenshot", "example screenshot", HP.LFT.Report.Status.Passed, browser.GetSnapshot());
+
+
             var homeLink = browser.Describe<ILink>(new LinkDescription
             {
                 AccessibilityName = string.Empty,
@@ -83,6 +87,10 @@ namespace LeanFTAutoTest.step_bindings
                 TagName = @"A"
             });
             Assert.That(capLink.IsVisible);
+            Verify.IsTrue(capLink.IsVisible, "Verifying the cap is in the basket");
+
+            Reporter.ReportEvent("Screenshot", "example screenshot", HP.LFT.Report.Status.Passed, browser.GetSnapshot());
+
 
             var removeThisItemLink = browser.Describe<ILink>(new LinkDescription
             {
